@@ -1,33 +1,28 @@
 name: Build catdoc
 
-# 触发条件：允许在网页端手动点击按钮触发编译
 on:
   workflow_dispatch: 
 
 jobs:
   build:
-    # 指定运行环境为最新版的 Ubuntu Linux
     runs-on: ubuntu-latest
 
     steps:
-    # 步骤 1：安装编译所需的依赖工具
     - name: Install build dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential autoconf git
 
-    # 步骤 2：从开源镜像获取 catdoc 的源代码
     - name: Clone catdoc source code
-      run: git clone https://github.com/petervojtek/catdoc.git
+      # 此处已更正为有效的镜像地址
+      run: git clone https://github.com/petewarden/catdoc.git
 
-    # 步骤 3：配置并编译源代码
     - name: Configure and Build
       run: |
         cd catdoc
         ./configure
         make
 
-    # 步骤 4：将编译生成的二进制文件打包为制品（Artifact）供下载
     - name: Upload compiled binaries
       uses: actions/upload-artifact@v4
       with:
